@@ -223,9 +223,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 margin: 0 auto;
             `;
       form.insertAdjacentElement('afterend', statusMessage);
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php');
-      request.setRequestHeader('Content-type', 'application/json');
+
       const formData = new FormData(form);
 
       const objectData = {};
@@ -233,19 +231,25 @@ window.addEventListener('DOMContentLoaded', () => {
         objectData[key] = val;
       });
 
-      const json = JSON.stringify(objectData);
-
-      request.send(json);
-
-      request.addEventListener('load', () => {
-        if (request.status === 200) {
+      fetch('server.php', {
+        method: 'POST',
+        body: JSON.stringify(objectData),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
           showThanksModal(message.success);
           statusMessage.remove();
-          form.reset();
-        } else {
+        })
+        .catch(() => {
           showThanksModal(message.failure);
-        }
-      });
+        })
+        .finally(() => {
+          form.reset();
+        });
     });
   }
 

@@ -182,9 +182,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   getResource('http://localhost:3000/menu').then(data => {
-    data.forEach((obj) =>
-      new MenuCard(...Object.values(obj), '.menu .container', 'menu__item').render()
-    );
+    data.forEach(obj => new MenuCard(...Object.values(obj), '.menu .container', 'menu__item').render());
   });
 
   //XMLHttpRequest
@@ -266,4 +264,40 @@ window.addEventListener('DOMContentLoaded', () => {
       clearTimeout(removeTimer);
     }, 4000);
   }
+
+  //slider
+
+  const slides = document.querySelectorAll('.offer__slide'),
+    prev = document.querySelector('.offer__slider-prev'),
+    next = document.querySelector('.offer__slider-next'),
+    cuurrentSlide = document.querySelector('#current'),
+    totalSlides = document.querySelector('#total');
+
+  totalSlides.textContent = slides.length < 9 ? `0${slides.length}` : slides.length;
+
+  let slideIndex = 1;
+
+  showSlides(slideIndex);
+
+  function showSlides(n) {
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+
+    slides.forEach(item => item.classList.add('hide'));
+    slides[slideIndex - 1].classList.remove('hide');
+    slides[slideIndex - 1].classList.add('show');
+    cuurrentSlide.textContent = slideIndex < 9 ? `0${slideIndex}` : slideIndex;
+  }
+
+  prev.addEventListener('click', () => {
+    showSlides(slideIndex -= 1);
+  })
+
+  next.addEventListener('click', () => {
+    showSlides(slideIndex += 1);
+  })
 });

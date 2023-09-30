@@ -2,7 +2,7 @@
   "name": "food",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,13 @@
   },
   "homepage": "https://github.com/helloworld1001/web-restaurant#readme",
   "devDependencies": {
-    "json-server": "^0.17.3"
+    "eslint": "^8.50.0",
+    "json-server": "^0.17.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.28.1"
   }
 }
